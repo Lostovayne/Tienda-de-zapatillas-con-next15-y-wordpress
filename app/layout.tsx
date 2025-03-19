@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { DM_Mono } from "next/font/google";
 import "./globals.css";
+import CartProvider from "@/providers/cart-context";
 
 const dmmono = DM_Mono({
   weight: "400",
   subsets: ["latin"],
-})
+});
 
 export const metadata: Metadata = {
   title: "Deus Store Yeezy",
@@ -18,11 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning >
-      <body
-        className={`${dmmono.className} antialiased`}
-      >
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${dmmono.className} antialiased`}>
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );
