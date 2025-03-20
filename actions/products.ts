@@ -9,7 +9,9 @@ const WooCommerce = new WooCommerceRestApi({
 });
 
 export const getProducts = async () => {
-  const products = await WooCommerce.get("products");
+  const {data} = await WooCommerce.get("products");
+  console.log(data);
+  return data;
 };
 
 export const createOrder = async (orderData: any) => {
@@ -21,3 +23,5 @@ export const createOrder = async (orderData: any) => {
     throw error;
   }
 };
+
+export type GetProductType = Awaited<ReturnType<typeof getProducts>>;

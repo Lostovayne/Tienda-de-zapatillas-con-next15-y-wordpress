@@ -1,7 +1,9 @@
-import { getProducts } from "@/actions/products";
+import { getProducts, GetProductType } from "@/actions/products";
+import { ProductGrid } from "@/components/product-grid";
 
 export default async function Home() {
   //TODO: revisar con TanstackQuery
-  const products = await getProducts();
+  const products: GetProductType = await getProducts();
+
   return <ProductGrid products={products} />;
 }
