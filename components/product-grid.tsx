@@ -2,7 +2,7 @@
 import { GetProductType } from "@/actions/products";
 import { useCart } from "@/hooks/use-cart";
 import { navbarData } from "@/lib/data";
-import { MoreVertical, ShoppingCart, X } from "lucide-react";
+import { Minus, MoreVertical, Plus, ShoppingCart, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -14,7 +14,7 @@ type Props = {
 
 export const ProductGrid = ({ products }: Props) => {
   const [toggle, setToggle] = useState<boolean>(false);
-  const { isOpen, setIsOpen, items: cartItems } = useCart();
+  const { isOpen, setIsOpen, items: cartItems, updateQuantity, removeItem: removeFromCart } = useCart();
 
   return (
     <div className="min-h-screen bg-white">
@@ -80,13 +80,39 @@ export const ProductGrid = ({ products }: Props) => {
                           <div className="flex flex-1 flex-col">
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>{item.name}</h3>
-                              <p>{item.price}</p>
+                              <p className="ml-4">{item.price}</p>
+                            </div>
+                            {/* Buttons */}
+                            <div className="flex items-center mt-2">
+                              <button
+                                className="rounded-md border p-1"
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              >
+                                <Minus className="size-4" />
+                              </button>
+                              <span className="mx-2 w-8 text-center">{item.quantity}</span>
+                              <button
+                                className="rounded-md border p-1"
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              >
+                                <Plus className="size-4" />
+                              </button>
+
+                              <button
+                                className="ml-auto text-gray-400 hover:text-gray-500"
+                                onClick={() => removeFromCart(item.id)}
+                              >
+                                <X className="size-4" />
+                                <span className="sr-only">Remove</span>
+                              </button>
                             </div>
                           </div>
                         </li>
                       ))}
                     </ul>
                   </div>
+                  {/* Aqui quedé */}
+                  <div className="border-t border-gray-200 py-6"></div>
                 </div>
               )}
             </SheetContent>
